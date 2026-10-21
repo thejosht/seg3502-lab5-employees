@@ -4,7 +4,7 @@ A small Angular application that saves employee records in Cloud Firestore. The 
 
 ## Run locally
 
-Use Node.js 22 and npm.
+Use Node.js 22 and npm
 
 ```bash
 git clone https://github.com/thejosht/seg3502-lab5-employees.git
