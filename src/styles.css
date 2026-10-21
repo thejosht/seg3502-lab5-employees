@@ -1,0 +1,8 @@
+body { background: #f5f6f8; color: #202a35; }
+.container { max-width: 1100px; margin: 2rem auto; padding: 2rem; background: white; border: 1px solid #dce1e7; border-radius: 8px; }
+h1 { font-size: 1.8rem; margin-bottom: 1rem; }
+form { max-width: 640px; }
+label { font-weight: 500; margin-bottom: .35rem; }
+.alert { margin-top: .5rem; }
+th, td { white-space: nowrap; }
+@media (max-width: 600px) { .container { margin: 0; border-radius: 0; padding: 1.2rem; } }

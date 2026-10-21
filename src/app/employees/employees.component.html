@@ -1,0 +1,44 @@
+<div class="container">
+  <a class="btn btn-outline-primary mb-4" [routerLink]="['/employee']">Add Employee</a>
+  <h1>Employee List</h1>
+  <p class="small text-secondary">Shared demo directory. Do not enter real personal information.</p>
+  @if (state$ | async; as state) {
+    @if (state.loading) {
+      <p role="status">Loading employees…</p>
+    } @else if (state.error) {
+      <div class="alert alert-danger" role="alert">{{ state.error }}</div>
+      <button class="btn btn-primary" (click)="retry()">Try again</button>
+    } @else {
+      <p class="text-secondary" role="status">{{ state.employees.length }} employee{{ state.employees.length === 1 ? '' : 's' }} saved.</p>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle">
+          <caption>Employees saved in Cloud Firestore</caption>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Date of birth</th>
+              <th scope="col">City</th>
+              <th scope="col">Salary</th>
+              <th scope="col">Gender</th>
+              <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (employee of state.employees; track $index) {
+              <tr>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.dateOfBirth | date:'dd/MM/yyyy' }}</td>
+                <td>{{ employee.city }}</td>
+                <td>{{ employee.salary | number:'1.2-2' }}</td>
+                <td>{{ employee.gender || '—' }}</td>
+                <td>{{ employee.email || '—' }}</td>
+              </tr>
+            } @empty {
+              <tr><td colspan="6" class="text-center text-secondary py-4">No employees saved yet. Use Add Employee to create the first record.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

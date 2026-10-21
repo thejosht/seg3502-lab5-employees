@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /employees/{employeeId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && validEmployee(request.resource.data);
+      allow update, delete: if false;
+    }
+
+    function validEmployee(employee) {
+      return employee.keys().hasAll(['name', 'dateOfBirth', 'city', 'salary', 'gender', 'email'])
+        && employee.keys().hasOnly(['name', 'dateOfBirth', 'city', 'salary', 'gender', 'email'])
+        && employee.name is string && employee.name.size() > 0 && employee.name.size() <= 200
+        && employee.dateOfBirth is string
+        && employee.dateOfBirth.matches('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$')
+        && employee.city is string && employee.city.size() > 0 && employee.city.size() <= 200
+        && employee.salary is number && employee.salary >= 0
+        && employee.gender in ['', 'M', 'F', 'X']
+        && employee.email is string && employee.email.size() <= 320;
+    }
+  }
+}
